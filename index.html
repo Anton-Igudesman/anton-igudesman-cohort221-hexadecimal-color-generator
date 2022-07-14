@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hexadecimal Color Generator</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="card">
+        <div id="values">
+            <h4>RGB Values</h4>
+            <h6 id="red"></h6>
+            <h6 id="green"></h6>
+            <h6 id="blue"></h6>
+        </div>
+        <div id="color" class="container">
+            <h1 id="colorName">Hello</h1>
+        </div>
+    </div>
+    <button id="generate" type="button">Generate A Color!</button>
+    <div class="manipulation-container">
+        <h4>Color Manipulation</h4>
+     <input type="radio" id="red" name="rgb-value" value="red">
+     <label for="html">Red</label>
+     <input type="radio" id="green" name="rgb-value" value="green">
+     <label for="html">Green</label> 
+     <input type="radio" id="blue" name="rgb-value" value="blue">
+     <label for="html">Blue</label><br>
+     <label for="increment">Numeric value to increment color value:</label>
+     <input type="number" id="increment" name="increment" min="0" max="255"><br>
+     <button id="increment-up" type="button" onclick="incrementColorUp()">Increment Up</button>
+     <button id="increment-down" type="button" onclick="incrementColorDown()">Increment Down</button><br> 
+     <button id="create-swatch" type="button" onclick="createSwatch()">Create Swatch</button>   
+    </div>
+    <div id="swatch-container"></div>
+    <script src="app.js"></script>
+</body>
+</html>
