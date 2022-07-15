@@ -2,11 +2,9 @@ let startArray = ['red', 'green', 'blue'];
 let promptArray = ['red', 'green', 'blue'];
 let rgbArray = [];
 let rgbString = '';
-
+let apiColor;
 //starting Hexcolor upon page open
-let startRed;
-let startGreen;
-let startBlue;
+
 function hexadecimal() {
   for (let i = 0; i <= 2;) {
     startArray[i] = promptArray[i];
@@ -29,28 +27,50 @@ function hexadecimal() {
             document.getElementById('color').style.backgroundColor = rgbString;
            
   }
-let hexColor = '';
-function randomHexColor() {
-    hexColor = '';
-    randNum(0, 255);
-    hexColor += hex.toString(16);
-    randNum(0, 255);
-    hexColor += hex.toString(16);
-    randNum(0, 255);
-    hexColor += hex.toString(16);
-    hexColor = '#' + hexColor;
-    document.getElementById('color').style.backgroundColor = hexColor;
-   console.log(hexColor);
-    
-
+function displayRGB() {
+  let red = colorArray[0];
+let green = colorArray[1];
+let blue = colorArray[2];
+document.getElementById('red').textContent = `Red: ${red}`;
+document.getElementById('green').textContent = `Green: ${green}`;
+document.getElementById('blue').textContent = `Blue: ${blue}`;
 }
+
 let hex;
 function randNum (min, max) {
     hex = Math.floor(Math.random() * (max - min + 1) + min);
     return hex;
 }
+let display;
+let colorArray = [];
+function randomColor() {
+  colorArray = [];
+  randNum(0, 255);
+  colorArray.push(hex);
+  randNum(0, 255);
+  colorArray.push(hex);
+  randNum(0, 255);
+  colorArray.push(hex);
+  console.log(colorArray);
+  document.getElementById('color').style.backgroundColor = 
+  `rgb(${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]})`;
+  displayRGB();
+  fetch(`https://www.thecolorapi.com/id?rgb=${colorArray[0]},${colorArray[1]},${colorArray[2]}&format=json`)
+  .then(res => res.json()) // the .json() method parses the JSON response into a JS object literal
+  .then(data => document.getElementById('color-name').textContent = data.name.value);
+  
+  
+  
+}
+function getName() {
+  fetch(`https://www.thecolorapi.com/id?rgb=${colorArray[0]},${colorArray[1]},${colorArray[2]}&format=json`)
+  .then(res => res.json()) // the .json() method parses the JSON response into a JS object literal
+  .then(data => document.getElementById('color-name').textContent = data.name.value);
+}
+
 
 function incrementColorDown() {
+  document.getElementById('color-name').textContent = '';
   let value = document.querySelector('input[name="rgb-value"]:checked').id;
   let numvalue = document.getElementById('increment').value;
   console.log(value);
@@ -58,29 +78,25 @@ function incrementColorDown() {
 
   switch(value) {
     case 'red':
-      rgbArray[0] -= numvalue;
+      colorArray[0] -= numvalue;
       console.log(rgbArray[0]);
       break;
     case 'green':
-      rgbArray[1] -= numvalue;
+      colorArray[1] -= numvalue;
       break;
     case 'blue':
-      rgbArray[2] -= numvalue;
+      colorArray[2] -= numvalue;
       break;
   }
-  let color = 'rgb(' + rgbArray[0] + ',' + rgbArray[1] + ',' + rgbArray[2] + ')';
+  let color = 'rgb(' + colorArray[0] + ',' + colorArray[1] + ',' + colorArray[2] + ')';
   console.log('color: ' + color);
   document.getElementById('color').style.backgroundColor = color;
-console.log(rgbArray);
-let red = rgbArray[0];
-let green = rgbArray[1];
-let blue = rgbArray[2];
-document.getElementById('red').textContent = `Red: ${red}`;
-document.getElementById('green').textContent = `Green: ${green}`;
-document.getElementById('blue').textContent = `Blue: ${blue}`;
+  console.log(colorArray);
+  displayRGB();
 }
 
 function incrementColorUp() {
+  document.getElementById('color-name').textContent = '';
   let value = document.querySelector('input[name="rgb-value"]:checked').id;
   let numvalue = document.getElementById('increment').value;
   console.log(value);
@@ -88,40 +104,28 @@ function incrementColorUp() {
 
   switch(value) {
     case 'red':
-      rgbArray[0] += +numvalue;
-      console.log(rgbArray[0]);
+      colorArray[0] += +numvalue;
+      console.log(colorArray[0]);
       break;
     case 'green':
-      rgbArray[1] += +numvalue;
+      colorArray[1] += +numvalue;
       break;
     case 'blue':
-      rgbArray[2] += +numvalue;
+      colorArray[2] += +numvalue;
       break;
   }
-  let color = 'rgb(' + rgbArray[0] + ',' + rgbArray[1] + ',' + rgbArray[2] + ')';
+  let color = 'rgb(' + colorArray[0] + ',' + colorArray[1] + ',' + colorArray[2] + ')';
   console.log('color: ' + color);
   document.getElementById('color').style.backgroundColor = color;
-console.log(rgbArray);
-let red = rgbArray[0];
-let green = rgbArray[1];
-let blue = rgbArray[2];
-document.getElementById('red').textContent = `Red: ${red}`;
-document.getElementById('green').textContent = `Green: ${green}`;
-document.getElementById('blue').textContent = `Blue: ${blue}`;
+  console.log(colorArray);
+  displayRGB();
 }
 
-function convertHex(red, blue, green) {
-  rgbArray = [red, blue, green];
-  color = `rgb(${red}, ${blue}, ${green})`;
-  
-  document.getElementById('color').style.backgroundColor = color;
-  
-  console.log(rgbArray);
 
-}
 
 let swatchArray = [];
 function createSwatch() {
+  let color = `rgb(${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]})`;
   swatchArray.push(1);
   console.log(swatchArray);
   let body = document.querySelector('body');
@@ -137,18 +141,24 @@ function createSwatch() {
   body.append(swatch);
   
   console.log(swatch.id);
-  console.log(hexColor);
+  //console.log(hexColor);
 }
-  document.getElementById(swatch.id).style.backgroundColor = hexColor;
-  alert(color);
+  document.getElementById(swatch.id).style.backgroundColor = color;
+  fetch(`https://www.thecolorapi.com/id?rgb=${colorArray[0]},${colorArray[1]},${colorArray[2]}&format=json`)
+  .then(res => res.json()) // the .json() method parses the JSON response into a JS object literal
+  .then(data => document.getElementById(swatch.id).textContent = data.name.value);
 }
 
-// hexadecimal();
+
 document.getElementById("generate").addEventListener('click', function () {
-  randomHexColor()
+  randomColor()
 });
-// incrementColor();
-convertHex(197, 101, 255);
+
 console.log(rgbArray);
+
+function jsonDataFetcher(){
+jsonData = `https://www.thecolorapi.com/id?rgb=${colorArray[0]},${colorArray[1]},${colorArray[2]}&format=json`;
+console.log(JSON.parse(jsonData));
+}
 
 
