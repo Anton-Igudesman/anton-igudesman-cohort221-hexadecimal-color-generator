@@ -29,11 +29,11 @@ function hexadecimal() {
   }
 function displayRGB() {
   let red = colorArray[0];
-let green = colorArray[1];
-let blue = colorArray[2];
-document.getElementById('red').textContent = `Red: ${red}`;
-document.getElementById('green').textContent = `Green: ${green}`;
-document.getElementById('blue').textContent = `Blue: ${blue}`;
+  let green = colorArray[1];
+  let blue = colorArray[2];
+  document.getElementById('red').textContent = `Red: ${red}`;
+  document.getElementById('green').textContent = `Green: ${green}`;
+  document.getElementById('blue').textContent = `Blue: ${blue}`;
 }
 
 let hex;
